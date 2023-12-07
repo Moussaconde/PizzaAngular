@@ -1,0 +1,19 @@
+
+<div class='container'>
+  <div class="row">
+    <div *ngIf='pizzaToDisplay' class="col s12 m6">
+      <div class="card horizontal" appBorderCard="blue">
+        <div class="card-image" style="width: 100px"><img [src]=" pizzaToDisplay.picture"></div>
+        <div class="card-stacked">
+          <div class="card-content"><p>{{ pizzaToDisplay.name }}</p>
+            <p>
+              <small>{{ pizzaToDisplay.created | date}}</small>
+            </p>
+            <span *ngFor="let ingredient of pizzaToDisplay.compositions" class="{{ ingredient | pizzaIngredientColor }}">{{ingredient }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

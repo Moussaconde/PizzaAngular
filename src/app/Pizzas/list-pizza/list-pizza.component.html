@@ -9,7 +9,7 @@
             <p>
               <small>{{ singlePizza.created | date}}</small>
             </p>
-            <span *ngFor="let ingredient of singlePizza.compositions">{{ingredient}}</span>
+            <span *ngFor="let ingredient of singlePizza.compositions" class="{{ ingredient | pizzaIngredientColor }}">{{ingredient }}</span>
           </div>
         </div>
       </div>

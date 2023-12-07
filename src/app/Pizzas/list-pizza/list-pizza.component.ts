@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Pizza } from 'src/app/Pizza';
 import { LIST_PIZZAS } from 'src/app/shared/list.pizza';
 
@@ -11,7 +12,7 @@ export class ListPizzaComponent implements OnInit{
   
   PIZZAS : Pizza[] = [];
 
-  constructor(){
+  constructor(private router: Router){
 
   }
 
@@ -20,7 +21,8 @@ export class ListPizzaComponent implements OnInit{
   }
 
   selectPizza(selectedPizza : Pizza) : void{
-    alert("vous avez selectioner :" + selectedPizza.name)
+    const link : any = ['pizzas', selectedPizza.id];
+    this.router.navigate(link);
   }
 
   
