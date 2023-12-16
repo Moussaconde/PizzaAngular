@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Pizza } from 'src/app/Pizza';
-import { LIST_PIZZAS } from 'src/app/shared/list.pizza';
-
+import { PizzaService } from '../pizzas.service';
 @Component({
   selector: 'app-details-pizza',
   templateUrl: './details-pizza.component.html',
@@ -12,24 +11,26 @@ export class DetailsPizzaComponent implements OnInit {
   pizzaToDisplay : Pizza | undefined;
   listOfPizzas : Pizza[] | undefined;
 
-  constructor(private activatedRoute : ActivatedRoute){
+  constructor(private pizzaService: PizzaService ,private activatedRoute : ActivatedRoute, private router : Router){
 
   }
 
 
   ngOnInit(): void {
-    this.listOfPizzas = LIST_PIZZAS;
 
     // Récupérer le paramètre de la route associée à notre composant
     // @ts-ignore
     const retrievedIdFromURL = +this.activatedRoute.snapshot.paramMap.get('id');
-
-    this.listOfPizzas.forEach(pizza => {
-      if(pizza.id == retrievedIdFromURL) {
-        this.pizzaToDisplay = pizza;
-      }
-      
-    })
+    this.pizzaToDisplay = this.pizzaService.getSinglePizza(retrievedIdFromURL);
+  }
+  
+  retourAccueil(): void {
+    this.router.navigate(['/pizzas']);
   }
 
+  redirectToEdit(id: number | undefined): void {
+    if (id) {
+      this.router.navigate(['/pizzas/edit', id]);
+    }
+  }
 }

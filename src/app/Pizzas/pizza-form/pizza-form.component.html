@@ -1,0 +1,38 @@
+<form #pizzaForm="ngForm" (ngSubmit)="onSubmit()">
+    <div *ngIf="pizza">
+      <div>
+        <label>Nom de la pizza</label>
+        <input type="text" [(ngModel)]="pizza.name" name="name" #name="ngModel" required pattern="^[A-Za-Z0-9àéèç]{1,25}$" [ngClass]="{ 'invalid-input': name.invalid && (name.dirty || name.touched), 'valid-input': name.valid }">
+        <div *ngIf="name.invalid && (name.dirty || name.touched)">
+            <div *ngIf="name.errors?.['pattern']">Le nom de la pizza doit contenir entre 1 et 25 caractères alphabétiques.</div>
+        </div>
+      </div>
+  
+      <div>
+        <label>Nutri-score</label>
+        <input type="text" [(ngModel)]="pizza.nutriScore" name="nutriScore" #nutriScore="ngModel" required pattern="[0-9]" [ngClass]="{ 'invalid-input': nutriScore.invalid && (nutriScore.dirty || nutriScore.touched), 'valid-input': nutriScore.valid }">
+        <div *ngIf="nutriScore.invalid && (nutriScore.dirty || nutriScore.touched)">
+          <div *ngIf="nutriScore.errors?.['pattern']">Le nutri-score doit être un chiffre entre 0 et 9.</div>
+          </div>
+      </div>
+  
+      <div class="container">
+        <label>Ingrédients</label>
+        <div *ngFor="let ingredient of ingredients">
+          <p>
+            <label>
+              <input type="checkbox" [checked]="hasIngredient(ingredient)" (change)="selectIngredient($event, ingredient)" />
+              <span class="chip" [ngClass]="{ 'grey': !hasIngredient(ingredient), 'deep-purple accent-1': hasIngredient(ingredient) }" class="{{ ingredient | pizzaIngredientColor }}">
+                {{ ingredient }}
+              </span>
+            </label>
+          </p>
+        </div>
+      </div>
+      
+  
+      <button type="submit" class="waves-effect waves-light btn" [disabled]="!isCompositionValid(ingredients)" >Valider</button>
+    </div>
+    <div *ngIf="!pizza"> Aucune pizza sélectionnée</div>
+  </form>
+  

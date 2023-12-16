@@ -1,0 +1,7 @@
+<div *ngIf="singlePizza">
+    <h2>{{ singlePizza.name }}</h2>
+    <img *ngIf="singlePizza.picture" [src]="singlePizza.picture" alt="Image de la pizza"> 
+    <app-pizza-form [pizza]="singlePizza"></app-pizza-form> 
+  </div>
+  <div *ngIf="!singlePizza">Message d'erreur : Aucune pizza sélectionnée</div> 
+  

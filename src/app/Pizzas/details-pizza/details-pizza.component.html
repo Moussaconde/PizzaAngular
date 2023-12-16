@@ -1,19 +1,47 @@
-
-<div class='container'>
-  <div class="row">
-    <div *ngIf='pizzaToDisplay' class="col s12 m6">
-      <div class="card horizontal" appBorderCard="blue">
-        <div class="card-image" style="width: 100px"><img [src]=" pizzaToDisplay.picture"></div>
-        <div class="card-stacked">
-          <div class="card-content"><p>{{ pizzaToDisplay.name }}</p>
-            <p>
-              <small>{{ pizzaToDisplay.created | date}}</small>
-            </p>
-            <span *ngFor="let ingredient of pizzaToDisplay.compositions" class="{{ ingredient | pizzaIngredientColor }}">{{ingredient }}</span>
-          </div>
+  <div class="container">
+    <div class="row">
+      <div *ngIf="pizzaToDisplay" class="col s12">
+        <h2>{{ pizzaToDisplay.name }}</h2>
+        <div class="center-align">
+          <img [src]="pizzaToDisplay.picture" alt="Pizza Image" style="max-width: 350px; max-height: 250px;">
         </div>
+        <table class="striped">
+          <tbody>
+            <tr>
+              <td><strong>Nom:</strong></td>
+              <td>{{ pizzaToDisplay.name }}</td>
+            </tr>
+            <tr>
+              <td><strong>Nutriscore:</strong></td>
+              <td>{{ pizzaToDisplay.nutriScore }}</td>
+            </tr>
+            <tr>
+              <td><strong>Ingrédients:</strong></td>
+              <td>
+                <ul>
+                  <li *ngFor="let ingredient of pizzaToDisplay.compositions" class="{{ ingredient | pizzaIngredientColor }}">{{ ingredient }}</li>
+                </ul>
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Date de création:</strong></td>
+              <td>{{ pizzaToDisplay.created | date }}</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
-  </div>
-</div>
+    <div *ngIf="!pizzaToDisplay" class="col s12">
+      <h4> Aucune pizza à afficher.</h4>
+    </div>
 
+    <div class="row">
+      <div class="col-md-6">
+        <button class="waves-effect waves-light btn" (click)="retourAccueil()">Retour à l'accueil</button>
+      </div>
+      <div *ngIf="pizzaToDisplay" class="col-md-6">
+        <button class="waves-effect waves-light btn" (click)="redirectToEdit(pizzaToDisplay.id)">Edit</button>
+      </div>
+    </div>
+    
+  </div>
